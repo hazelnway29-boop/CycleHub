@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bike Shops Nearby</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+</head>
+<body>
+  <header>
+    <h1>Bristol Cycle Hub</h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="reviews.html">Reviews</a>
+       <a href="data.html">Data Table</a>
+    </nav>
+  </header>
+
+<body>
+  <section class="reviews-container">
+    <div class="reviews-card">
+      <h2 class="reviews-title">Customer Reviews</h2>
+      <p class="reviews-subtitle">See what others are saying and share your experience below.</p>
+
+      <!-- Reviews Display -->
+      <div id="reviews-list" class="reviews-list">
+        <!-- Example preloaded reviews -->
+        <div class="reviews-item">
+          <div class="reviews-header">
+            <h3 class="reviews-name">Emma Johnson</h3>
+            <div class="reviews-stars-display">★★★★☆</div>
+          </div>
+          <p class="reviews-message">Fantastic experience! Staff were friendly and helped me choose the perfect bike.</p>
+        </div>
+
+        <div class="reviews-item">
+          <div class="reviews-header">
+            <h3 class="reviews-name">Liam Patel</h3>
+            <div class="reviews-stars-display">★★★★★</div>
+          </div>
+          <p class="reviews-message">Great service and quick repair turnaround. Highly recommend!</p>
+        </div>
+      </div>
+
+      <hr class="reviews-divider" />
+
+      <!-- Review Form -->
+      <form id="reviewForm" class="reviews-form">
+        <div class="reviews-field">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your name" required />
+        </div>
+
+        <div class="reviews-field">
+          <label for="rating">Rating</label>
+          <div class="reviews-stars">
+            <input type="radio" id="star5" name="rating" value="★★★★★" required />
+            <label for="star5">★</label>
+            <input type="radio" id="star4" name="rating" value="★★★★☆" />
+            <label for="star4">★</label>
+            <input type="radio" id="star3" name="rating" value="★★★☆☆" />
+            <label for="star3">★</label>
+            <input type="radio" id="star2" name="rating" value="★★☆☆☆" />
+            <label for="star2">★</label>
+            <input type="radio" id="star1" name="rating" value="★☆☆☆☆" />
+            <label for="star1">★</label>
+          </div>
+        </div>
+
+        <div class="reviews-field">
+          <label for="message">Your Review</label>
+          <textarea id="message" name="message" rows="5" placeholder="Write your review here..." required></textarea>
+        </div>
+
+        <button type="submit" class="reviews-btn">Submit Review</button>
+      </form>
+    </div>
+  </section>
+   <footer>
+    <p>&copy; 2025 Bristol Cycle Hub. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

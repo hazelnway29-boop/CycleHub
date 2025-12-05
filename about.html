@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <!-- Import fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lora&family=Merriweather&family=Raleway:wght@400;700&display=swap" rel="stylesheet" />
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Merriweather', serif; /* base font for body */
+    }
+
+    body {
+      background: #f5f5f5;
+      color: #333;
+      font-family: 'Merriweather', serif;
+    }
+
+    /* Headings (h1, h2, h3, h4) use Raleway */
+    h1, h2, h3, h4 {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      color: black;
+    }
+
+    /* Subheadings use Lora */
+    .subheading {
+      font-family: 'Lora', serif;
+      font-weight: 400;
+      color: #0077cc;
+    }
+
+    header {
+      background: #23BCF9;
+      padding: 15px 30px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 119, 204, 0.3);
+      font-family: 'Raleway', sans-serif; /* header nav can be Raleway */
+    }
+
+    nav {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  position: relative;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+nav a:hover {
+  color: #745EFF;
+  background-color: rgba(0, 209, 139, 0.15);
+  text-decoration: none;
+}
+
+nav a.active,
+nav a.active:hover {
+  color: #745EFF;
+  font-weight: 700;
+}
+
+nav a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 3px;
+  background: #745EFF;
+  border-radius: 3px 3px 0 0;
+}
+
+.search-filter {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px 20px 40px;
+  text-align: center;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+    .about-hero {
+      width: 100%;
+      height: 50vh;
+      background: url('images/p29.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .about-hero::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.45);
+    }
+
+    .about-hero h1 {
+      position: relative;
+      color: white;
+      font-size: 3rem;
+      z-index: 2;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+    }
+
+    /* ========== CONTENT SECTIONS ========== */
+    .section {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 20px;
+      font-family: 'Merriweather', serif;
+      color: #333;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      color: #0077cc;
+      margin-bottom: 15px;
+      text-align: center;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+    }
+
+    .section p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      text-align: center;
+      max-width: 850px;
+      margin: 0 auto;
+      color: #444;
+      font-family: 'Merriweather', serif;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+      margin-top: 35px;
+    }
+
+    .service-card {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: 0.3s;
+      text-align: center;
+      font-family: 'Merriweather', serif;
+      color: #333;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .service-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .service-card h3 {
+      color: #0077cc;
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+    }
+
+    .service-card p {
+      font-size: 1rem;
+      color: #555;
+      font-family: 'Merriweather', serif;
+    }
+
+    /* VALUES SECTION */
+    .values-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .value-box {
+      background: #e9f6ff;
+      padding: 20px 25px;
+      border-radius: 12px;
+      width: 300px;
+      text-align: center;
+      border-left: 5px solid #0077cc;
+      font-family: 'Merriweather', serif;
+      color: #333;
+    }
+
+    .value-box h4 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: #0077cc;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+    }
+
+    .value-box p {
+      color: #444;
+      line-height: 1.6;
+      font-family: 'Merriweather', serif;
+    }
+
+    footer {
+  background: #0077cc;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+}
+
+    @media (max-width: 600px) {
+      .about-hero h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Bristol Cycle Hub</h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="data.html">Data Table</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <div class="about-hero">
+    <h1>Connecting Cyclists With Trusted Bike Shops</h1>
+  </div>
+
+  <!-- MISSION SECTION -->
+  <section class="section">
+    <h2>Our Mission</h2>
+    <p>
+      At <strong>Bristol Cycle Hub</strong>, our mission is to make cycling accessible, enjoyable, and safe for everyone.
+      We connect riders with reliable bike shops across Bristol, Bath, North Somerset and South Gloucestershire—making it easier
+      to find the right services, repairs, bikes and cycling support.
+    </p>
+  </section>
+
+  <!-- WHAT WE OFFER -->
+  <section class="section">
+    <h2>What We Offer</h2>
+
+    <div class="service-grid">
+      <div class="service-card">
+        <img src="images/p30.png" alt="">
+        <h3>Interactive Shop Map</h3>
+        <p>Explore bike shops near you with our advanced map and filtering system.</p>
+      </div>
+
+      <div class="service-card">
+        <img src="images/p31.jpg" alt="">
+        <h3>Service & Region</h3>
+        <p>Find shops based on services like repairs, new bikes, mobile repairs and more.</p>
+      </div>
+
+      <div class="service-card">
+        <img src="images/p32.jpg" alt="">
+        <h3>Customer Reviews</h3>
+        <p>Read real cyclist experiences to choose the best shop with confidence.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES SECTION -->
+  <section class="section">
+    <h2>Our Values</h2>
+
+    <div class="values-grid">
+      <div class="value-box">
+        <h4>Community</h4>
+        <p>We support Bristol’s growing cycling community by promoting trusted local shops.</p>
+      </div>
+
+      <div class="value-box">
+        <h4>Accessibility</h4>
+        <p>Our platform makes it easy for riders of all levels to find cycling resources.</p>
+      </div>
+
+      <div class="value-box">
+        <h4>Trust</h4>
+        <p>Every listed bike shop is reviewed for quality service and transparency.</p>
+      </div>
+
+      <div class="value-box">
+        <h4>Sustainability</h4>
+        <p>We encourage cycling as a greener, healthier way to travel.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Bristol Cycle Hub. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
+
+

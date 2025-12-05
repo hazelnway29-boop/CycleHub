@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bristol Bike Shops Data</title>
+
+  <!-- Import fonts (Raleway and Merriweather) -->
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Raleway:wght@400;700&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  
+  <style>
+    /* Base styles */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      
+
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Merriweather', serif; /* base font for body */
+      background: #f5f5f5;
+      color: #333;
+      font-family: 'Merriweather', serif;
+    }
+    
+
+    header {
+      background: #23BCF9;
+      padding: 15px 30px;
+     text-align: center;
+     box-shadow: 0 4px 10px rgba(0, 119, 204, 0.3);
+      font-family: 'Raleway', sans-serif; /* Header font */
+      font-weight: 700;
+    }
+
+    header h1 {
+      margin-bottom: 0;
+      font-weight: 700;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      font-family: 'Raleway', sans-serif;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 15px;
+      border-radius: 8px;
+      position: relative;
+      transition: color 0.3s ease, background-color 0.3s ease;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: #745EFF;
+      background-color: rgba(0, 209, 139, 0.15);
+      text-decoration: none;
+    }
+
+    nav a.active,
+    nav a.active:hover {
+      color: #745EFF;
+      font-weight: 700;
+    }
+
+    nav a.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -5px;
+      height: 3px;
+      background: #745EFF;
+      border-radius: 3px 3px 0 0;
+    }
+
+    /* Main container */
+    .container {
+      flex-grow: 1;
+      display: flex;
+      gap: 15px;
+      padding: 20px;
+      height: calc(100vh - 110px); /* header+footer height */
+      overflow: hidden;
+    }
+
+    /* Sidebar filter */
+    .sidebar {
+      width: 280px;
+      background: #f7f7f7;
+      padding: 15px;
+      border-right: 1px solid #ddd;
+      overflow-y: auto;
+      flex-shrink: 0;
+      border-radius: 5px;
+      font-family: 'Merriweather', serif;
+      color: #333;
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      color: #0077cc;
+    }
+
+    .sidebar label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: 600;
+      font-family: 'Raleway', sans-serif;
+      color: #0077cc;
+    }
+
+    .sidebar input[type="text"],
+    .sidebar select {
+      width: 100%;
+      padding: 7px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-family: 'Merriweather', serif;
+      box-sizing: border-box;
+    }
+
+    /* Content area */
+    .content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      overflow: hidden;
+      height: 100%;
+      font-family: 'Merriweather', serif;
+      color: #333;
+    }
+
+    #map {
+      flex: none;
+      height: 50vh;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 100%;
+    }
+
+    /* Wrapper for the table to allow scrolling if needed */
+    .table-wrapper {
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+
+    /* Table styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      word-wrap: break-word;
+      font-family: 'Merriweather', serif;
+      color: #333;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #CF9962;
+      color: white;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    a {
+      color: #0066cc;
+      text-decoration: none;
+      font-family: 'Merriweather', serif;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+  background: #0077cc;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Bristol Cycle Hub</h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="data.html" class="active">Data Table</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <h2>Filter Bike Shops</h2>
+      <label for="filter-name">Name</label>
+      <input type="text" id="filter-name" placeholder="Search by name" />
+
+      <label for="filter-address">Address</label>
+      <input type="text" id="filter-address" placeholder="Search by address" />
+
+      <label for="filter-description">Description</label>
+      <input type="text" id="filter-description" placeholder="Search by description" />
+
+      <label for="filter-website">Website</label>
+      <input type="text" id="filter-website" placeholder="Search by website" />
+
+      <label for="filter-phone">Phone</label>
+      <input type="text" id="filter-phone" placeholder="Search by phone" />
+
+      <label for="filter-services">Services Provided</label>
+      <select id="filter-services">
+        <option value="all">All Services</option>
+        <option value="New bikes">New bikes</option>
+        <option value="Bike servicing">Bike servicing</option>
+        <option value="Secondhand bikes">Secondhand bikes</option>
+        <option value="Bike hire">Bike hire</option>
+        <option value="Donate a bike">Donate a bike</option>
+        <option value="Custom bikes">Custom bikes</option>
+        <option value="E-Bikes">E-Bikes</option>
+        <option value="Bike tours">Bike tours</option>
+        <option value="Mobile bike repairs">Mobile bike repairs</option>
+      </select>
+
+      <label for="filter-region">Region</label>
+      <select id="filter-region">
+        <option value="all">All Regions</option>
+        <option value="Bristol">Bristol</option>
+        <option value="Bath">Bath</option>
+        <option value="North Somerset">North Somerset</option>
+        <option value="South Gloucestershire">South Gloucestershire</option>
+      </select>
+    </aside>
+
+    <main class="content">
+      <div id="map"></div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Description</th>
+              <th>Website</th>
+              <th>Phone</th>
+              <th>Services Provided</th>
+              <th>Region</th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Bristol Cycle Hub. All rights reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const bikeShops = [
+      {
+        name: "Weston Bicycle Works",
+        address: "143 Locking Road, Weston-super-Mare, BS23 3ER",
+        description: "A community enterprise selling quality refurbished bikes and welcome bike donations.",
+        website: "https://www.wbw.org.uk/",
+        phone: "01934 629989",
+        services: ["Secondhand bikes","Bike servicing","Donate a bike"],
+        region: "North Somerset",
+        lat: 51.346, 
+        lng: -2.974
+      },
+      {
+        name: "Avon Valley Cyclery",
+        address: "Brunel Square, Bath, BA1 1SX",
+        description: "An independent bike shop in the centre of the Georgian city of Bath, established for over 30 years.",
+        website: "http://www.avonvalleycyclery.co.uk/",
+        phone: "01225 442 442",
+        services: ["New bikes","Bike servicing"],
+        region: "Bath",
+        lat: 51.381,
+        lng: -2.360
+      },
+      {
+        name: "Total Fitness Bath",
+        address: "3 Saracen Street, Bath, BA1 5BR",
+        description: "Road, mountain biking, leisure riding, commuting or kids bikes.",
+        website: "http://www.totalfitnessbath.co.uk/",
+        phone: "01225 444164",
+        services: ["New bikes","Bike servicing","E-Bikes"],
+        region: "Bath",
+        lat: 51.381,
+        lng: -2.361
+      },
+      {
+        name: "Evans Cycles Bristol",
+        address: "Lewins Mead, Bristol, BS1 2PY",
+        description: "Everything you need for cycling, with great service and expertise.",
+        website: "http://www.evanscycles.com/store/bristol",
+        phone: "0343 909 3926",
+        services: ["New bikes","Bike servicing","E-Bikes"],
+        region: "Bristol",
+        lat: 51.456,
+        lng: -2.595
+      },
+      {
+        name: "Blackboy Hill Cycles",
+        address: "180 Whiteladies Road, Clifton, Bristol, BS8 2XU",
+        description: "Local family-run bike shop for over 40 years.",
+        website: "https://black-boy-cycles.co.uk/",
+        phone: "0117 973 1420",
+        services: ["New bikes","Bike servicing"],
+        region: "Bristol",
+        lat: 51.459,
+        lng: -2.618
+      },
+      {
+        name: "Bike Style",
+        address: "25b Alexandra Road, Clevedon, BS21 7QH",
+        description: "Clevedon's friendly local bike shop, North Somerset. Independent bike shop run by riders, we live and breathe biking.",
+        website: "http://www.bike-style.co.uk/",
+        phone: "01275 876 572",
+        services: ["New bikes","Bike servicing"],
+        region: "North Somerset",
+        lat: 51.444,
+        lng: -2.860,
+        image: "images/p10.jpg" 
+      },
+      {
+        name: "Cycle The City",
+        address: "No1 Harbourside , 1 Canon's Road, Bristol, BS1 5UH",
+        description: "Cycle the City has a range of high quality, Bristol-built bicycles for hire and guided tours in Bristol City centre.",
+        website: "http://www.cyclethecity.co.uk",
+        phone: "0117 427 1072",
+        services: ["Bike hire","Bike tours"],
+        region: "Bristol",
+        lat: 51.452,   // approximate
+        lng: -2.601,
+        image: "images/p11.jpg" 
+      },
+      {
+        name: "Bath Narrowboats",
+        address: "Bath Narrowboats, Sydney Wharf, Bathwick Hill, Bath, BA2 4EL",
+        description: "A range of quality bikes and accessories for hire. A delivery service is also available. Half day or full day cycling in or around Bath.",
+        website: "http://www.bath-narrowboats.co.uk",
+        phone: "01225 447276",
+        services: ["Bike hire"],
+        region: "Bath",
+        lat: 51.381,   // approximate
+        lng: -2.359,
+        image: "images/p13.jpg" 
+      },
+      {
+        name: "Gary Harris Cycles",
+        address: "Common Mead Lane, Hambrook, South Gloucestershire, BS16 1QQ",
+        description: "An independent local bike shop in Bristol that specialises in repairs to all bikes including electric bikes.",
+        website: "https://garyharriscycles.com/",
+        phone: "07816 515082",
+        services: ["New bikes","Bike servicing","E-Bikes"],
+        region: "South Gloucestershire",
+        lat: 51.528,  // approximate
+        lng: -2.516,
+        image: "images/p16.png" 
+      }
+    ];
+
+    const map = L.map('map').setView([51.4545, -2.5879], 11);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    let markers = [];
+
+    function displayShops(shops) {
+      const tbody = document.getElementById('table-body');
+      tbody.innerHTML = '';
+
+      markers.forEach(m => map.removeLayer(m));
+      markers = [];
+
+      shops.forEach(shop => {
+        const tr = document.createElement('tr');
+
+        tr.innerHTML = `
+          <td>${shop.name}</td>
+          <td>${shop.address}</td>
+          <td>${shop.description}</td>
+          <td><a href="${shop.website}" target="_blank">${shop.website.replace(/^https?:\/\//, '')}</a></td>
+          <td>${shop.phone}</td>
+          <td>${shop.services.join(', ')}</td>
+          <td>${shop.region}</td>
+        `;
+
+        tbody.appendChild(tr);
+
+        const marker = L.marker([shop.lat, shop.lng])
+          .addTo(map)
+          .bindPopup(`<b>${shop.name}</b><br>${shop.address}<br>${shop.phone}<br><a href="${shop.website}" target="_blank">Website</a>`);
+
+        markers.push(marker);
+      });
+    }
+
+    displayShops(bikeShops);
+
+    const filters = {
+      name: document.getElementById('filter-name'),
+      address: document.getElementById('filter-address'),
+      description: document.getElementById('filter-description'),
+      website: document.getElementById('filter-website'),
+      phone: document.getElementById('filter-phone'),
+      services: document.getElementById('filter-services'),
+      region: document.getElementById('filter-region')
+    };
+
+    function applyFilters() {
+      const nameVal = filters.name.value.toLowerCase();
+      const addressVal = filters.address.value.toLowerCase();
+      const descVal = filters.description.value.toLowerCase();
+      const websiteVal = filters.website.value.toLowerCase();
+      const phoneVal = filters.phone.value.toLowerCase();
+      const serviceVal = filters.services.value;
+      const regionVal = filters.region.value;
+
+      const filtered = bikeShops.filter(shop => {
+        return (
+          shop.name.toLowerCase().includes(nameVal) &&
+          shop.address.toLowerCase().includes(addressVal) &&
+          shop.description.toLowerCase().includes(descVal) &&
+          shop.website.toLowerCase().includes(websiteVal) &&
+          shop.phone.toLowerCase().includes(phoneVal) &&
+          (serviceVal === 'all' || shop.services.includes(serviceVal)) &&
+          (regionVal === 'all' || shop.region === regionVal)
+        );
+      });
+
+      displayShops(filtered);
+    }
+
+    Object.values(filters).forEach(input => {
+      input.addEventListener('input', applyFilters);
+      input.addEventListener('change', applyFilters);
+    });
+  </script>
+
+</body>
+</html>
+
