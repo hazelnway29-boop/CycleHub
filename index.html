@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bristol Cycle Hub</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+  <header>
+    <h1>Bristol Cycle Hub</h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <nav>
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="data.html">Data Table</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+ <div class="css-slideshow">
+
+  <div class="slide">
+    <img src="images/p26.jpg" alt="Cycling Image 1" />
+    <div class="slide-text">
+      <h2>Explore the Best Bike Shops</h2>
+      <p>Your local cycling community awaits.</p>
+      <a href="#map" class="slide-btn">Explore Map</a>
+    </div>
+  </div>
+
+  <div class="slide">
+    <img src="images/p28.jpg" alt="Cycling Image 2" />
+    <div class="slide-text">
+      <h2>Ride the City Sustainably</h2>
+      <p>Discover scenic routes and green paths.</p>
+      <a href="about.html" class="slide-btn">Learn More</a>
+    </div>
+  </div>
+
+  <div class="slide">
+    <img src="images/p27.jpg" alt="Cycling Image 3" />
+    <div class="slide-text">
+      <h2>Join Group Rides & Events</h2>
+      <p>Meet fellow riders and have fun!</p>
+      <a href="contact.html" class="slide-btn">Get Involved</a>
+    </div>
+  </div>
+
+</div>
+
+
+  
+
+  <!-- About Section -->
+  <section class="about slide-up">
+    <div class="about-container">
+      <img src="images/p2.jpg" alt="Cycling in Bristol" class="about-img" />
+      <div class="about-text">
+        <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ride the City Sustainably</h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <p>
+          Bristol is known as one of the UK’s most bike-friendly cities. With over 75 miles of cycle routes,
+          stunning harbourside views, and a thriving cycling community, it’s the perfect place to ride.
+        </p><br>
+        <p>
+          Whether you’re looking for bike hire, servicing, or guided tours, the Bristol Cycle Hub connects
+          you with trusted local experts who help keep your wheels spinning.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+
+
+
+  <!-- Search & Filter Section -->
+  <section class="search-filter fade-in">
+    <h2>Find Your Perfect Bike Service</h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="filters">
+      <input type="text" id="search-input" placeholder="Search..." />
+      <select id="service-filter">
+        <option value="all">All Services</option>
+        <option value="New bikes">New bikes</option>
+        <option value="Bike servicing">Bike servicing</option>
+        <option value="Secondhand bikes">Secondhand bikes</option>
+        <option value="Bike hire">Bike hire</option>
+        <option value="Donate a bike">Donate a bike</option>
+        <option value="Custom bikes">Custom bikes</option>
+        <option value="E-Bikes">E-Bikes</option>
+        <option value="Bike tours">Bike tours</option>
+        <option value="Mobile bike repairs">Mobile bike repairs</option>
+      </select>
+      <select id="region-filter">
+        <option value="all">All Regions</option>
+        <option value="Bristol">Bristol</option>
+        <option value="Bath">Bath</option>
+        <option value="North Somerset">North Somerset</option>
+        <option value="South Gloucestershire">South Gloucestershire</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- Map Section -->
+  <section class="map-section fade-in">
+   <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Explore Bike Shops on the Map</h2><br><br>
+    <div id="map" class="map-container"></div>
+  </section>
+
+  <!-- Shop Cards -->
+  <div class="shop-cards" id="shop-cards"></div>
+
+  <!-- Cycling Tips Section -->
+  <section class="tips-section">
+  <h2 class="tips-title">Pro Cycling Tips</h2>
+
+  <div class="tips-wrapper">
+    <div class="tips-card">
+      <div class="tips-icon">
+        <img src="images/p23.jpg" alt="Safety gear">
+      </div>
+      <h3 class="subheading">Wear Proper Safety Gear</h3>
+      <p>A well-fitted helmet and reflective clothing are essential for safe city riding.</p>
+    </div>
+
+    <div class="tips-card">
+      <div class="tips-icon">
+        <img src="images/p24.jpg" alt="Bike maintenance">
+      </div>
+      <h3 class="subheading">Keep Your Bike Maintained</h3>
+
+      <p>Regular checks keep your bike smooth, efficient, and ready for any journey.</p>
+    </div>
+
+    <div class="tips-card">
+      <div class="tips-icon">
+        <img src="images/p25.jpg" alt="Group rides">
+      </div>
+      <h3 class="subheading">Join Cycling Groups</h3>
+
+      <p>Meet the community, discover new routes, and stay motivated with group rides.</p>
+    </div>
+  </div>
+</section>
+
+
+
+  <footer>
+    <p>&copy; 2025 Bristol Cycle Hub. All rights reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
